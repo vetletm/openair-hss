@@ -180,7 +180,7 @@ install_1.1.5_freediameter_from_source() {
     cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ../
     ret=$?;[[ $ret -ne 0 ]] && return $ret
     echo "Compiling freeDiameter"
-    make -j`nproc`
+    make 
     ret=$?;[[ $ret -ne 0 ]] && return $ret
     #make test
     $SUDO make install
@@ -276,7 +276,7 @@ install_freediameter_from_source() {
     cd build
     $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=/usr/local ../
     ret=$?;[[ $ret -ne 0 ]] && return $ret
-    make -j`nproc`
+    make
     ret=$?;[[ $ret -ne 0 ]] && return $ret
     #make test
     $SUDO make install
@@ -335,7 +335,7 @@ install_latest_freediameter_from_source() {
     cd build
     cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ../
     echo "Compiling freeDiameter"
-    make -j`nproc`
+    make
     #make test
     $SUDO make install
     cd /tmp
@@ -431,7 +431,7 @@ install_opencoord.org_freediameter() {
     res=$?
     [[ $res -ne 0 ]] && popd && return $res
     awk '{if (/^DISABLE_SCTP/) gsub(/OFF/, "ON"); print}' CMakeCache.txt > tmp && mv tmp CMakeCache.txt
-    make -j`nproc`
+    make
     res=$?
     [[ $res -ne 0 ]] && popd && return $res
     $SUDO make install
