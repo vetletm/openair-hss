@@ -14,6 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+IS_CONTAINER=`egrep -c "docker|kubepods" /proc/self/cgroup`
+
+if [ $IS_CONTAINER -eq 0 ]
+then
+  SUDO='sudo -S -E'
+else
+  SUDO=''
+fi
+
 rm -rf demoCA
 mkdir demoCA
 echo 01 > demoCA/serial
@@ -44,6 +53,6 @@ openssl genrsa -out $HOST.key.pem 1024
 openssl req -new -batch -out $HOST.csr.pem -key $HOST.key.pem -subj /CN=$HOST.$DOMAIN/C=FR/ST=BdR/L=Aix/O=fD/OU=Tests
 openssl ca -cert cacert.pem -keyfile cakey.pem -in $HOST.csr.pem -out $HOST.cert.pem -outdir . -batch
 
-sudo cp -upv $HOST.cert.pem cacert.pem $HOST.key.pem  $PREFIX/freeDiameter
+$SUDO cp -upv $HOST.cert.pem cacert.pem $HOST.key.pem  $PREFIX/freeDiameter
 
 
