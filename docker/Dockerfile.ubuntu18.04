@@ -77,6 +77,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade --yes && DE
     python3-cassandra \
     iputils-ping \
     iproute2 \
+    telnetd \
+    iperf \
   && rm -rf /var/lib/apt/lists/*
 
 
